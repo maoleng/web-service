@@ -18,3 +18,4 @@ Route::put('/product/{id}', [ProductController::class, 'update'])->middleware(Ad
 Route::delete('/product/{id}', [ProductController::class, 'destroy'])->middleware(AdminAuthenticate::class);
 
 Route::get('/cart', [CartController::class, 'index'])->middleware(CustomerAuthenticate::class);
+Route::put('/cart', [CartController::class, 'update'])->middleware(CustomerAuthenticate::class);

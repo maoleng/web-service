@@ -7,7 +7,7 @@ use Libraries\Request\Form\FormRequest;
 class ProductRequest extends FormRequest
 {
 
-    public function rules()
+    public function rules(): array
     {
         return [
             'name' => function ($value) {
