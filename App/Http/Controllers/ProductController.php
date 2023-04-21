@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
 use App\Models\Product;
+use Exception;
 use Libraries\Request\Request;
 
 class ProductController extends Controller
@@ -92,6 +93,28 @@ class ProductController extends Controller
                     'image' => $product->image,
                     'created_at' => $product->created_at,
                 ],
+            ],
+        ]);
+    }
+
+    public function destroy(Request $request, $id): void
+    {
+        $product = (new Product)->findOrFail($id);
+        try {
+            $product->delete();
+        } catch (Exception) {
+            response()->json([
+                'status' => false,
+                'data' => [
+                    'message' => 'Can not delete product because it is already in user\'s order',
+                ],
+            ]);
+        }
+
+        response()->json([
+            'status' => true,
+            'data' => [
+                'message' => 'Delete product successfully',
             ],
         ]);
     }
