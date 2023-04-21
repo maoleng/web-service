@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Middlewares\AdminAuthenticate;
@@ -24,3 +25,5 @@ Route::put('/cart', [CartController::class, 'update'])->middleware(CustomerAuthe
 Route::post('/pay', [PaymentController::class, 'pay'])->middleware(CustomerAuthenticate::class);
 Route::get('/pay/verify', [PaymentController::class, 'verifyPayment']);
 
+Route::get('/order', [OrderController::class, 'index'])->middleware(CustomerAuthenticate::class);
+Route::get('/order/{id}', [OrderController::class, 'show'])->middleware(CustomerAuthenticate::class);
