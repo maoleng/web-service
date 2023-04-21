@@ -2,7 +2,6 @@
 
 use Carbon\Carbon;
 use JetBrains\PhpStorm\Pure;
-use Libraries\Redirect\Redirector;
 use Libraries\Request\Request;
 use Libraries\Response\Response;
 
@@ -17,7 +16,6 @@ if (! function_exists('view')) {
         foreach ($data as $key => $each) {
             ${$key} = $each;
         }
-        authed();
 
         return require($file_path);
     }
@@ -93,14 +91,6 @@ if (! function_exists('now')) {
     function now(): Carbon
     {
         return Carbon::now();
-    }
-}
-
-if (! function_exists('redirect')) {
-    #[Pure]
-    function redirect(): Redirector
-    {
-        return new Redirector();
     }
 }
 

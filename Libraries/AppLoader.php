@@ -34,7 +34,7 @@ class AppLoader
     {
         $this->loadFiles('Libraries/Response/HttpResponse');
         require_once asset('Libraries/Response/Response.php');
-        $this->loadFiles('Libraries/Redirect');
+        require_once asset('Libraries/Redirect/Route.php');
     }
 
     private function loadMails(): void
