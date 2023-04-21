@@ -14,7 +14,6 @@ class AppLoader
         $loader->loadModels();
         $loader->loadHttp();
         $loader->loadMails();
-        $loader->loadSession();
         $loader->loadRedirectResponse();
         $loader->loadSupport();
         $loader->loadExternalHelpers();
@@ -36,11 +35,6 @@ class AppLoader
         $this->loadFiles('Libraries/Response/HttpResponse');
         require_once asset('Libraries/Response/Response.php');
         $this->loadFiles('Libraries/Redirect');
-    }
-
-    private function loadSession(): void
-    {
-        require_once asset('Libraries/Session/Session.php');
     }
 
     private function loadMails(): void

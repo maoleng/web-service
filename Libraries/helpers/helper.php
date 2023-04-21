@@ -5,7 +5,6 @@ use JetBrains\PhpStorm\Pure;
 use Libraries\Redirect\Redirector;
 use Libraries\Request\Request;
 use Libraries\Response\Response;
-use Libraries\Session\Session;
 
 if (! function_exists('view')) {
     function view($view_name, $data = [])
@@ -94,13 +93,6 @@ if (! function_exists('now')) {
     function now(): Carbon
     {
         return Carbon::now();
-    }
-}
-
-if (! function_exists('session')) {
-    function session($key = null)
-    {
-        return isset($key) ? Session::get($key) : (new Session());
     }
 }
 
