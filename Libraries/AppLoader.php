@@ -16,6 +16,7 @@ class AppLoader
         $loader->loadMails();
         $loader->loadRedirectResponse();
         $loader->loadSupport();
+        $loader->loadJWT();
         $loader->loadExternalHelpers();
     }
 
@@ -23,6 +24,11 @@ class AppLoader
     {
         require_once asset('App/Helper.php');
         $this->loadFiles('App/Helpers');
+    }
+
+    private function loadJWT(): void
+    {
+        require_once asset('Libraries/JWT/JWT.php');
     }
 
     private function loadSupport(): void
