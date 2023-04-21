@@ -4,6 +4,7 @@ namespace Libraries\database_drivers;
 
 use JetBrains\PhpStorm\NoReturn;
 use Libraries\database_drivers\mysql\Query;
+use Libraries\Response\Response;
 
 #[\AllowDynamicProperties]
 abstract class Model

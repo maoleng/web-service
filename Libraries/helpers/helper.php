@@ -127,16 +127,14 @@ if (! function_exists('abort')) {
     }
 }
 
-if (! function_exists('csrf_token')) {
-    function csrf_token()
+if (! function_exists('throwHttpException')) {
+    function throwHttpException($message, $code = Response::HTTP_INTERNAL_SERVER_ERROR)
     {
-        return session()->get('_token');
-    }
-}
-
-if (! function_exists('csrf_token_field')) {
-    function csrf_token_field()
-    {
-        echo '<input type="hidden" name="_token" value="'.csrf_token().'">';
+        response()->json([
+            'status' => false,
+            'data' => [
+                'message' => $message
+            ],
+        ], $code);
     }
 }

@@ -3,7 +3,6 @@
 namespace Libraries\Request;
 
 use Closure;
-use Error;
 use Exception;
 use JetBrains\PhpStorm\ArrayShape;
 use Libraries\Redirect\Route;
@@ -82,13 +81,15 @@ trait HandleRequest
                 $function($request ?? $this, $optional_value) :
                 $function[0]->{$function[1]}($request ?? $this, $optional_value);
         } catch (Throwable|Exception $e) {
-            $message = $e->getMessage();
-            $file = $e->getFile();
-            $line = $e->getLine();
-            $errors = $e->getTrace();
-            require asset('Libraries/Response/views/debug.php');
-
-            return false;
+            response()->json([
+                'status' => false,
+                'data' => [
+                    'message' => $e->getMessage(),
+                    'file' => $e->getFile(),
+                    'line' => $e->getLine(),
+                    'trace' => $e->getTrace(),
+                ]
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
     }

@@ -7,7 +7,6 @@ use JetBrains\PhpStorm\Pure;
 class Request
 {
     use HandleRequest;
-    use CSRF;
 
     public $url = '/';
     public $method = 'index';
@@ -15,7 +14,6 @@ class Request
     public function __construct()
     {
         $this->getRequest();
-//        $this->validateCsrf();
     }
 
     /**

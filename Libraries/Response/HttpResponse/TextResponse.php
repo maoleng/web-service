@@ -8,7 +8,7 @@ trait TextResponse
     public static function message(string $message = ''): void
     {
         header('Content-Type: text/plain; charset=utf-8');
-        http_response_code(self::HTTP_FOUND);
+        http_response_code(self::HTTP_OK);
         echo $message;
 
         exit;
@@ -17,7 +17,7 @@ trait TextResponse
     public static function html(string $message = ''): void
     {
         header('Content-Type: text/html; charset=utf-8');
-        http_response_code(self::HTTP_FOUND);
+        http_response_code(self::HTTP_OK);
         echo $message;
 
         exit;

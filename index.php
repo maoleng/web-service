@@ -7,12 +7,6 @@ foreach (scandir(__DIR__.'/Libraries/helpers') as $filename) {
     }
 }
 
-if (env('APP_ENV') === 'development') {
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
-    set_error_handler('customError');
-}
-
 // Load classes
 require_once('Libraries/AppLoader.php');
 Libraries\AppLoader::load();

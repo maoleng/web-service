@@ -4,6 +4,7 @@ namespace Libraries\database_drivers\mysql;
 
 use Libraries\database_drivers\BaseBuilder;
 use Libraries\database_drivers\Model;
+use Libraries\Response\Response;
 
 class Query
 {
