@@ -3,17 +3,18 @@
 namespace Libraries\Request\Form;
 
 use Libraries\Request\Request;
+use Libraries\Response\Response;
 
 abstract class FormRequest extends Request
 {
 
     private array $data;
+    private array $errors;
 
     public function __construct()
     {
         parent::__construct();
         $this->data = $this->only(array_keys($this->rules()));
-        session()->flash('old', $this->data);
     }
 
     public function validated(): array
@@ -31,7 +32,12 @@ abstract class FormRequest extends Request
             }
         }
         if ($is_fail) {
-            redirect()->back();
+            response()->json([
+                'status' => false,
+                'data' => [
+                    'errors' => $this->errors,
+                ],
+            ], Response::HTTP_BAD_REQUEST);
         }
 
         return array_merge($result, $this->data);
@@ -44,9 +50,7 @@ abstract class FormRequest extends Request
 
     public function fail($message): bool
     {
-        $errors = session()->get('errors');
-        $errors[] = $message;
-        session()->flash('errors', $errors);
+        $this->errors[] = $message;
 
         return false;
     }

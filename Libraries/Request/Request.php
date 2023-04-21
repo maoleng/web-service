@@ -23,7 +23,32 @@ class Request
      */
     public function all(): array
     {
-        return $this->method === 'GET' ? $_GET : array_merge($_POST, $_FILES);
+        $body = file_get_contents('php://input');
+        if (str_starts_with($_SERVER['CONTENT_TYPE'] ?? '', 'multipart/form-data')) {
+            preg_match_all('/-\d+.*\n-/sU', $body, $fields);
+            $body = [];
+            foreach ($fields[0] as $field) {
+                preg_match('/name=".*"/sU', $field, $key);
+                $key = substr($key[0], 6, -1);
+                preg_match('/\r\n\r\n.*-/s', $field, $content);
+                $content = substr($content[0], 6, -3);
+                preg_match('/\d+\r\n.*filename=".*"/sU', $field, $file_name);
+                if (isset($file_name[0])) {
+                    preg_match('/filename=".*"/', $file_name[0], $file_name);
+                    $file_name = substr($file_name[0], 10, -1);
+                    $body[$key] = [
+                        'file_name' => $file_name,
+                        'file_content' => $content,
+                    ];
+                } else {
+                    $body[$key] = $content;
+                }
+            }
+        } else {
+            $body = (array) json_decode($body, false);
+        }
+
+        return array_merge($_GET, $_POST, $_FILES, $body);
     }
 
     /**
@@ -34,9 +59,7 @@ class Request
      */
     public function get($key): mixed
     {
-        return $this->method === 'GET' ?
-            ($_GET[$key] ?? null) :
-            (array_merge($_POST, $_FILES)[$key] ?? null);
+        return $this->all()[$key] ?? null;
     }
 
     /**
@@ -49,20 +72,6 @@ class Request
     public function query($key = null): string|array|null
     {
         return $key === null ? $_GET : ($_GET[$key] ?? null);
-    }
-
-    /**
-     * Trả về các tham số trong form
-     * Có thể truyền key vào để lấy giá trị của key đó
-     *
-     * @param $key
-     * @return string|array|null
-     */
-    public function input($key = null): string|array|null
-    {
-        return $key === null ?
-            array_merge($_POST, $_FILES) :
-            (array_merge($_POST, $_FILES)[$key] ?? null);
     }
 
     /**
