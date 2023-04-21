@@ -58,7 +58,40 @@ class ProductController extends Controller
             'status' => true,
             'data' => [
                 'message' => 'Created product successfully',
-                'id' => $product->id,
+                'product' => [
+                    'id' => $product->id,
+                    'name' => $product->name,
+                    'description' => $product->description,
+                    'price' => prettyMoney($product->price),
+                    'image' => $product->image,
+                    'created_at' => $product->created_at,
+                ],
+            ],
+        ]);
+    }
+
+    public function update(ProductRequest $request, $id): void
+    {
+        $data = $request->validated();
+
+        $product = (new Product)->findOrFail($id);
+        foreach ($data as $column => $value) {
+            $product->$column = $value;
+        }
+        $product->save();
+
+        response()->json([
+            'status' => true,
+            'data' => [
+                'message' => 'Updated product successfully',
+                'product' => [
+                    'id' => $product->id,
+                    'name' => $product->name,
+                    'description' => $product->description,
+                    'price' => prettyMoney($product->price),
+                    'image' => $product->image,
+                    'created_at' => $product->created_at,
+                ],
             ],
         ]);
     }
