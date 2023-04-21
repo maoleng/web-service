@@ -4,63 +4,86 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
+use App\Lib\JWT\JWT;
 use App\Models\User;
 
 class AuthController extends Controller
 {
 
-    public function login()
-    {
-        return view('customer.auth.login');
-    }
-
-    public function register()
-    {
-        return view('customer.auth.register');
-    }
-
-    public function processLogin(LoginRequest $request): void
+    public function login(LoginRequest $request): void
     {
         $data = $request->validated();
         $user = (new User)->where('email', $data['email'])->first();
         if ($user === null) {
-            redirectBackWithError('Wrong email address or password');
+            response()->json([
+                'status' => false,
+                'data' => [
+                    'message' => 'Wrong email address or password',
+                ],
+            ]);
         }
         if (! $user->verify($data['password'])) {
-            redirectBackWithError('Wrong email address or password');
+            response()->json([
+                'status' => false,
+                'data' => [
+                    'message' => 'Wrong email address or password',
+                ],
+            ]);
         }
-        session()->put('auth', $user);
+        $token = $this->generateUserToken($user);
+        $user->update(['token' => $token]);
 
-        redirect()->route('/');
+        response()->json([
+            'status' => true,
+            'data' => [
+                'message' => 'Login successfully',
+                'user' => [
+                    'id' => (int) $user->attributes['id'],
+                    'name' => $user->attributes['name'],
+                    'email' => $user->attributes['email'],
+                    'is_admin' => (bool) (int) $user->attributes['is_admin'],
+                    'created_at' => $user->attributes['created_at'],
+                ],
+                'token' => $token,
+            ],
+        ]);
     }
 
-    public function processRegister(RegisterRequest $request): void
+    public function register(RegisterRequest $request): void
     {
         $data = $request->validated();
         $user = (new User)->where('email', $data['email'])->first();
         if ($user !== null) {
-            redirectBackWithError('Email already exists');
+            response()->json([
+                'status' => false,
+                'data' => [
+                    'message' => 'Email is already registered by another user',
+                ],
+            ]);
         }
         (new User())->create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => password_hash($data['password'], PASSWORD_DEFAULT),
             'is_admin' => 0,
+            'token' => '',
             'created_at' => now()->format('Y-m-d H:i:s'),
         ]);
-        session()->flash('success', 'Registered successfully');
 
-        redirect()->route('/');
+        response()->json([
+            'status' => true,
+            'data' => [
+                'message' => 'Registered successfully',
+            ],
+        ]);
     }
 
-    public function logout(): void
+    private function generateUserToken($user)
     {
-        session()->forget('auth');
+        $user = (array) $user->attributes;
+        unset($user['password'], $user['token']);
 
-        redirect()->route('/');
+        return JWT::encode($user);
     }
-
-
-
 
 }

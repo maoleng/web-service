@@ -1,10 +1,9 @@
 <?php
 
 
+use App\Http\Controllers\AuthController;
 use Libraries\Redirect\Route;
 
-Route::delete('/', function () {
-    abort(400);
-    response()->message('a');
-    echo 1;
-});
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+
