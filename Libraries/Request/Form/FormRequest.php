@@ -35,7 +35,7 @@ abstract class FormRequest extends Request
             response()->json([
                 'status' => false,
                 'data' => [
-                    'errors' => $this->errors,
+                    'message' => $this->errors[0],
                 ],
             ], Response::HTTP_BAD_REQUEST);
         }
