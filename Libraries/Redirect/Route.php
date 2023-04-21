@@ -20,6 +20,20 @@ class Route
         return new static();
     }
 
+    public static function put($uri, $action): static
+    {
+        self::$routes['PUT,'.$uri] = $action;
+
+        return new static();
+    }
+
+    public static function delete($uri, $action): static
+    {
+        self::$routes['DELETE,'.$uri] = $action;
+
+        return new static();
+    }
+
     public static function middleware($class): void
     {
         $last = array_key_last(self::$routes);
