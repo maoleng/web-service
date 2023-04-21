@@ -12,7 +12,7 @@ class AdminAuthenticate extends Middleware
             response()->json([
                 'status' => false,
                 'data' => [
-                    'message' => 'You must be customer',
+                    'message' => 'You must be admin',
                 ],
             ]);
         }
