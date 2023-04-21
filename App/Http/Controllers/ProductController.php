@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use Libraries\Request\Request;
 
@@ -42,6 +43,22 @@ class ProductController extends Controller
                 'price' => prettyMoney($product->price),
                 'image' => $product->image,
                 'created_at' => $product->created_at,
+            ],
+        ]);
+    }
+
+    public function store(ProductRequest $request): void
+    {
+        $data = $request->validated();
+        $data['created_at'] = now()->toDateTimeString();
+
+        $product = (new Product)->create($data);
+
+        response()->json([
+            'status' => true,
+            'data' => [
+                'message' => 'Created product successfully',
+                'id' => $product->id,
             ],
         ]);
     }
