@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Middlewares\AdminAuthenticate;
 use App\Http\Middlewares\CustomerAuthenticate;
@@ -19,3 +20,7 @@ Route::delete('/product/{id}', [ProductController::class, 'destroy'])->middlewar
 
 Route::get('/cart', [CartController::class, 'index'])->middleware(CustomerAuthenticate::class);
 Route::put('/cart', [CartController::class, 'update'])->middleware(CustomerAuthenticate::class);
+
+Route::post('/pay', [PaymentController::class, 'pay'])->middleware(CustomerAuthenticate::class);
+Route::get('/pay/verify', [PaymentController::class, 'verifyPayment']);
+

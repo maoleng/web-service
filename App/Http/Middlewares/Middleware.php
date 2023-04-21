@@ -10,10 +10,11 @@ abstract class Middleware
     public function identify()
     {
         $bearer_token = getRequestHeader('Authorization');
-        if (empty($bearer_token)) {
+        $query_token = request()->get('token');
+        if (empty($bearer_token) && $query_token === null) {
             $this->throwUnauthorized();
         }
-        $token = substr($bearer_token, 7);
+        $token = empty($bearer_token) ? $query_token : substr($bearer_token, 7);
         $user = (new User)->where('token', $token)->first();
         if ($user === null) {
             $this->throwUnauthorized();

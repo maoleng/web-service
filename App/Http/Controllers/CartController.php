@@ -11,7 +11,7 @@ class CartController extends Controller
 
     public function index(): void
     {
-        $order = $this->getCart();
+        $order = Order::getCart();
         $cart = (new OrderProduct)->raw("
             SELECT product_id, products.name, image,
                    orders_products.price, amount, (products.price * amount) as `sum`
@@ -64,6 +64,10 @@ class CartController extends Controller
                 $builder->update(['amount' => $data['amount']]);
             }
         }
+        $total = (new OrderProduct)->raw("
+            SELECT SUM(price * amount) AS `total` FROM orders_products WHERE order_id = $order->id 
+        ")[0]->total;
+        $order->update(['total' => $total]);
 
         response()->json([
             'status' => true,
@@ -71,25 +75,6 @@ class CartController extends Controller
                 'message' => 'Update cart successfully',
             ],
         ]);
-    }
-
-    private function getCart(): Order
-    {
-        $order = (new Order)->where('user_id', authed()->id)->where('status', 'In cart')->first();
-        if ($order === null) {
-            $order = (new Order)->create([
-                'total' => 0,
-                'status' => 'In cart',
-                'address' => '',
-                'phone' => '',
-                'bank_code' => '',
-                'transaction_code' => '',
-                'user_id' => authed()->id,
-                'created_at' => now()->toDateTimeString(),
-            ]);
-        }
-
-        return $order;
     }
 
 }
