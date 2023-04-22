@@ -4,7 +4,6 @@ namespace Libraries\Request;
 
 use Closure;
 use Exception;
-use JetBrains\PhpStorm\ArrayShape;
 use Libraries\Redirect\Route;
 use Libraries\Response\Response;
 use ReflectionClass;
@@ -18,17 +17,9 @@ trait HandleRequest
     {
         $routes = $this->getRoutes();
         $key = $this->method.','.$this->url;
+        // Nếu route hiện tại không khớp với cái nào trong route.php thì kiểm tra trường hợp url tùy chọn
         if (empty($routes[$key])) {
-            // Nếu route hiện tại không khớp với cái nào trong route.php thì kiểm tra trường hợp url tùy chọn
-            $arr_keys = array_keys($routes);
-            $url_optional = $this->getUrlOptional();
-            foreach ($arr_keys as $arr_key) {
-                if (str_starts_with($arr_key, $url_optional['str_starts_with'])) {
-                    preg_match('/\/{[a-z]+}/', $arr_key, $match);
-                    $key = $url_optional['no_optional_url'].$match[0];
-                    $optional_value = $url_optional['optional_value'];
-                }
-            }
+            [$key, $optionals] = $this->getUrlOptional($routes);
             // Nếu trường hợp tùy chọn vẫn không thỏa mãn thì trả về lỗi
             if (empty($routes[$key])) {
                 abort(Response::HTTP_NOT_FOUND);
@@ -37,7 +28,7 @@ trait HandleRequest
 
         // Nếu action là 1 Closure
         if ($routes[$key] instanceof Closure) {
-            return $this->handleAction($routes[$key], $optional_value ?? null);
+            return $this->handleAction($routes[$key], $optionals ?? []);
         }
 
         // Nếu action là 1 hàm của Controller
@@ -61,10 +52,10 @@ trait HandleRequest
             $middleware->handle();
         }
 
-        return $this->handleAction([$class, $method_name], $optional_value ?? null);
+        return $this->handleAction([$class, $method_name], $optionals ?? []);
     }
 
-    private function handleAction($function, $optional_value = null)
+    private function handleAction($function, $optionals)
     {
         $action = $function instanceof Closure ?
             (new ReflectionFunction($function)) :
@@ -78,8 +69,8 @@ trait HandleRequest
 
         try {
             return $function instanceof Closure ?
-                $function($request ?? $this, $optional_value) :
-                $function[0]->{$function[1]}($request ?? $this, $optional_value);
+                $function($request ?? $this, ...$optionals) :
+                $function[0]->{$function[1]}($request ?? $this, ...$optionals);
         } catch (Throwable|Exception $e) {
             response()->json([
                 'status' => false,
@@ -125,23 +116,41 @@ trait HandleRequest
      * Lấy những biến cho trường hợp đường dẫn tùy chọn trên URL
      * Ví dụ như: domain.com/post/xin_chao_cac_ban thì xin_chao_cac_ban là phần tùy chọn
      */
-    #[ArrayShape([
-        'optional_value' => "null|string", 'no_optional_url' => "string", 'str_starts_with' => "string"
-    ])]
-    private function getUrlOptional(): array
+    private function getUrlOptional($routes): array
     {
         $key = $this->method.','.$this->url;
-        $arr = explode('/', $key);
-        $optional_value = array_pop($arr);
-        if (empty($optional_value)) {
-            abort(Response::HTTP_NOT_FOUND);
+        $arr_keys = array_keys($routes);
+        $optionals = [];
+        foreach ($arr_keys as $arr_key) {
+            if (! str_contains($arr_key, '{')) {
+                continue;
+            }
+            $route_paths = explode('/', $arr_key);
+            $url_paths = explode('/', $key);
+            if (count($route_paths) !== count($url_paths)) {
+                continue;
+            }
+            $valid = true;
+            $optionals = [];
+            foreach ($route_paths as $i => $path) {
+                $is_custom_key = str_starts_with($path, '{');
+                if ($path !== $url_paths[$i] && ! $is_custom_key) {
+                    $valid = false;
+                    break;
+                }
+                if ($is_custom_key) {
+                    $optionals[] = $url_paths[$i];
+                }
+            }
+            if (! $valid) {
+                continue;
+            }
+            break;
         }
-        $url = implode('/', $arr);
 
         return [
-            'optional_value' => $optional_value,
-            'no_optional_url' => $url,
-            'str_starts_with' => $url.'/{',
+            empty($optionals) ? null : ($arr_key ?? null),
+            $optionals,
         ];
     }
 
