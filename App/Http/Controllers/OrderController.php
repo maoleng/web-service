@@ -11,7 +11,7 @@ class OrderController extends Controller
 
     public function index(): void
     {
-        $orders = (new Order)->where('user_id', authed()->id)->paginate();
+        $orders = (new Order)->where('user_id', authed()->id)->orderByDesc('created_at')->paginate();
         $data = [];
         foreach ($orders['data'] as $order) {
             $data[] = [
