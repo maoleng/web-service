@@ -45,7 +45,7 @@ class CartController extends Controller
     public function update(UpdateCartRequest $request): void
     {
         $data = $request->validated();
-        $order = $this->getCart();
+        $order = Order::getCart();
 
         $builder = (new OrderProduct)->where('order_id', $order->id)->where('product_id', $data['product_id']);
 
