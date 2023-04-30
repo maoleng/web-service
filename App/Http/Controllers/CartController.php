@@ -25,10 +25,10 @@ class CartController extends Controller
         foreach ($cart as $each) {
             $total += $each->amount * $each->price;
             $data[] = [
-                'product_id' => $each->product_id,
+                'product_id' => (int) $each->product_id,
                 'name' => $each->name,
                 'price' => prettyMoney($each->price),
-                'amount' => $each->amount,
+                'amount' => (int) $each->amount,
                 'sum' => prettyMoney($each->sum),
             ];
         }
@@ -36,7 +36,7 @@ class CartController extends Controller
         response()->json([
             'status' => true,
             'data' => [
-                'total' => $total,
+                'total' => prettyMoney($total),
                 'cart' => $data,
             ],
         ]);

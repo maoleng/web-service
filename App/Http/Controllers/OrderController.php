@@ -47,10 +47,10 @@ class OrderController extends Controller
         $data = [];
         foreach ($order_product as $each) {
             $data[] = [
-                'product_id' => $each->product_id,
+                'product_id' => (int) $each->product_id,
                 'name' => $each->name,
                 'price' => prettyMoney($each->price),
-                'amount' => $each->amount,
+                'amount' => (int) $each->amount,
                 'sum' => prettyMoney($each->sum),
             ];
         }
@@ -58,7 +58,7 @@ class OrderController extends Controller
         response()->json([
             'status' => true,
             'data' => [
-                'total' => $order->total,
+                'total' => prettyMoney($order->total),
                 'order' => $data,
             ],
         ]);
