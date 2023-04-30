@@ -3,12 +3,21 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Middlewares\AdminAuthenticate;
 use App\Http\Middlewares\CustomerAuthenticate;
 use Libraries\Redirect\Route;
+
+/*
+ * This file contains all the route of project
+ * Request will find route to match the URL and Method
+ * If it does not match any, it will return 404
+ */
+
+Route::get('/', [HomeController::class, 'index']);
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
