@@ -1,0 +1,494 @@
+{
+	"info": {
+		"_postman_id": "7f73bdd9-c3ae-4da5-9a54-beb0125d5c13",
+		"name": "web service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19030379"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"customer@gmail.com\",\r\n    \"password\" : \"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://web-service.skrt.cc/login",
+							"protocol": "https",
+							"host": [
+								"web-service",
+								"skrt",
+								"cc"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Nhat Tan Vu\",\r\n    \"email\" : \"nhattan123@gmail.com\",\r\n    \"password\" : \"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://web-service.skrt.cc/register",
+							"protocol": "https",
+							"host": [
+								"web-service",
+								"skrt",
+								"cc"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cart",
+			"item": [
+				{
+					"name": "index",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjEiLCJuYW1lIjoiQ3VzdG9tZXIgTmFtZSIsImVtYWlsIjoiY3VzdG9tZXJAZ21haWwuY29tIiwiaXNfYWRtaW4iOiIwIiwiY3JlYXRlZF9hdCI6IjIwMjMtMDQtMjEgMDg6MDE6MzgifQ.755DZu5YB8VTHH5JP2Ja7ZxRgTamBzkOB6Irk67e6TU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://web-service.skrt.cc/cart",
+							"protocol": "https",
+							"host": [
+								"web-service",
+								"skrt",
+								"cc"
+							],
+							"path": [
+								"cart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjEiLCJuYW1lIjoiQ3VzdG9tZXIgTmFtZSIsImVtYWlsIjoiY3VzdG9tZXJAZ21haWwuY29tIiwiaXNfYWRtaW4iOiIwIiwiY3JlYXRlZF9hdCI6IjIwMjMtMDQtMjEgMDg6MDE6MzgifQ.755DZu5YB8VTHH5JP2Ja7ZxRgTamBzkOB6Irk67e6TU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product_id\": 60,\r\n    \"amount\" : 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://web-service.skrt.cc/cart",
+							"protocol": "https",
+							"host": [
+								"web-service",
+								"skrt",
+								"cc"
+							],
+							"path": [
+								"cart"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pay",
+			"item": [
+				{
+					"name": "pay",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjEiLCJuYW1lIjoiQ3VzdG9tZXIgTmFtZSIsImVtYWlsIjoiY3VzdG9tZXJAZ21haWwuY29tIiwiaXNfYWRtaW4iOiIwIiwiY3JlYXRlZF9hdCI6IjIwMjMtMDQtMjEgMDg6MDE6MzgifQ.755DZu5YB8VTHH5JP2Ja7ZxRgTamBzkOB6Irk67e6TU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"address\" : \"Dia chi nha\",\r\n    \"phone\" : \"sdt\",\r\n    \"bank_code\" : \"VNBANK\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://web-service.skrt.cc/pay",
+							"protocol": "https",
+							"host": [
+								"web-service",
+								"skrt",
+								"cc"
+							],
+							"path": [
+								"pay"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "index",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"customer1@gmail.com\",\r\n    \"password\" : \"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://web-service.skrt.cc/product?page=2",
+							"protocol": "https",
+							"host": [
+								"web-service",
+								"skrt",
+								"cc"
+							],
+							"path": [
+								"product"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "show",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"customer1@gmail.com\",\r\n    \"password\" : \"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://web-service.skrt.cc/product/10",
+							"protocol": "https",
+							"host": [
+								"web-service",
+								"skrt",
+								"cc"
+							],
+							"path": [
+								"product",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "store",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjEiLCJuYW1lIjoiQ3VzdG9tZXIgTmFtZSIsImVtYWlsIjoiY3VzdG9tZXJAZ21haWwuY29tIiwiaXNfYWRtaW4iOiIwIiwiY3JlYXRlZF9hdCI6IjIwMjMtMDQtMjEgMDg6MDE6MzgifQ.755DZu5YB8VTHH5JP2Ja7ZxRgTamBzkOB6Irk67e6TU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"San pham A\",\r\n    \"description\": \"Mo ta san pham\",\r\n    \"price\": \"100000\",\r\n    \"image\": \"https://via.placeholder.com/640x480.png/00ccbb?text=nulla\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://web-service.skrt.cc/product",
+							"protocol": "https",
+							"host": [
+								"web-service",
+								"skrt",
+								"cc"
+							],
+							"path": [
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjQiLCJuYW1lIjoiTmhhdCBUYW4gVnUiLCJlbWFpbCI6Im5oYXR0YW5AZ21haWwuY29tIiwiaXNfYWRtaW4iOiIwIiwiY3JlYXRlZF9hdCI6IjIwMjMtMDQtMjIgMjE6MjY6MzcifQ.XUHbIGUEOIao76l0RWLvV0zrxnsH3GiY5C9oVoX2l2Y",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"San pham sau khi duoc cap nhat\",\r\n    \"description\": \"Mo ta san pham moi\",\r\n    \"price\": \"100000\",\r\n    \"image\": \"https://via.placeholder.com/640x480.png/00ccbb?text=nulla\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://web-service.skrt.cc/product/104",
+							"protocol": "https",
+							"host": [
+								"web-service",
+								"skrt",
+								"cc"
+							],
+							"path": [
+								"product",
+								"104"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "destroy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjQiLCJuYW1lIjoiTmhhdCBUYW4gVnUiLCJlbWFpbCI6Im5oYXR0YW5AZ21haWwuY29tIiwiaXNfYWRtaW4iOiIwIiwiY3JlYXRlZF9hdCI6IjIwMjMtMDQtMjIgMjE6MjY6MzcifQ.XUHbIGUEOIao76l0RWLvV0zrxnsH3GiY5C9oVoX2l2Y",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"San pham A\",\r\n    \"description\": \"Mo ta san pham\",\r\n    \"price\": \"100000\",\r\n    \"image\": \"https://via.placeholder.com/640x480.png/00ccbb?text=nulla\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://web-service.skrt.cc/product/104",
+							"protocol": "https",
+							"host": [
+								"web-service",
+								"skrt",
+								"cc"
+							],
+							"path": [
+								"product",
+								"104"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Order",
+			"item": [
+				{
+					"name": "index",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjEiLCJuYW1lIjoiQ3VzdG9tZXIgTmFtZSIsImVtYWlsIjoiY3VzdG9tZXJAZ21haWwuY29tIiwiaXNfYWRtaW4iOiIwIiwiY3JlYXRlZF9hdCI6IjIwMjMtMDQtMjEgMDg6MDE6MzgifQ.755DZu5YB8VTHH5JP2Ja7ZxRgTamBzkOB6Irk67e6TU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"customer1@gmail.com\",\r\n    \"password\" : \"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://web-service.skrt.cc/order?page=1",
+							"protocol": "https",
+							"host": [
+								"web-service",
+								"skrt",
+								"cc"
+							],
+							"path": [
+								"order"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "show",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjEiLCJuYW1lIjoiQ3VzdG9tZXIgTmFtZSIsImVtYWlsIjoiY3VzdG9tZXJAZ21haWwuY29tIiwiaXNfYWRtaW4iOiIwIiwiY3JlYXRlZF9hdCI6IjIwMjMtMDQtMjEgMDg6MDE6MzgifQ.755DZu5YB8VTHH5JP2Ja7ZxRgTamBzkOB6Irk67e6TU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"customer1@gmail.com\",\r\n    \"password\" : \"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://web-service.skrt.cc/order/36",
+							"protocol": "https",
+							"host": [
+								"web-service",
+								"skrt",
+								"cc"
+							],
+							"path": [
+								"order",
+								"36"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
