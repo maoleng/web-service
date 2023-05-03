@@ -121,7 +121,7 @@ class HomeController extends Controller
                     ],
                     'verify_payment' => [
                         'description' => 'Verify the payment, this is called by VNPAY',
-                        'path' => '/pay',
+                        'path' => '/pay/verify',
                         'method' => 'GET',
                     ],
                 ],
