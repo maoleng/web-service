@@ -1,5 +1,11 @@
 # Midterm Web programming at TDTU
 
+## Live Demo
+[https://web-service.skrt.cc/](https://web-service.skrt.cc/)
+
+## Demo
+[Youtube](https://youtu.be/WzBXUS6pq_4)
+
 ## Require: PHP 8.1 or 8.2
 
 ## Config database:
